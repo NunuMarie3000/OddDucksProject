@@ -1,4 +1,12 @@
 img{
     width: 20vw;
     height: 35vh;
+    border-style: solid;
+    border-color: black;
+    border-width: 5px;
+}
+
+#image-container{
+    display: flex;
+    justify-content: space-around;
 }
