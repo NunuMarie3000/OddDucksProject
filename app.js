@@ -7,10 +7,13 @@ let allProducts = [];
 let maxClicks = 25;
 let totalClicks = 0;
 //this array is gonna hold all our product names
-let productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
+let productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'petSweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'waterCan', 'wineGlass'];
+
+//i feel like i'm gonna have to figure out how to make generateUnique not as convoluted as it is...
+
 
 // Create a constructor function that creates an object associated with each product, and has the following properties:
-function createProduct(name, filePath){
+function Product(name, filePath){
     // Name of the product
     // File path of image
     // Times the image has been shown
@@ -21,42 +24,78 @@ function createProduct(name, filePath){
     allProducts.push(this);
 }
 
-// Create an algorithm that will randomly generate three unique product images from the images directory and display them side-by-side-by-side in the browser window.
-function generateUnique(){
-    //gives me a whole number
-    let randomPic = Math.floor(Math.random() * productNames.length);
-    return randomPic;
-}
-
 //get elements from html
 const imageContainer = document.getElementById('image-container');
 const resultsContainer = document.getElementById('results');
-let img_one = document.querySelector('#image-container img:first-child');
-let img_two = document.querySelector('#image-container img:nth-child(2)');
 let resultsButton = document.getElementById('results-button');
 
-//instance variables --> Objects
-
 //we gotta instantiate our objects
-let bag = new createProduct('bag', './assets/bag.jpg');
+let bag = new Product('bag', './assets/bag.jpg');
 // //this would be how to get it out of the array, utilitzing bracket notation and concatenation
-// let bag0 = new createProduct(productNames[0], './assets' + productNames[0] + '.jpg');
-let banana = new createProduct('banana', './assets/banana.jpg');
-//create function that adds src and alt attributes to image
-function constructImages(){
+// let bag0 = new Product(productNames[0], './assets' + productNames[0] + '.jpg');
+let banana = new Product('banana', './assets/banana.jpg');
+let bathroom = new Product('bathroom', './assets/bathroom.jpg');
+let boots = new Product('boots', './assets/boots.jpg');
+let breakfast = new Product('breakfast', './assets/breakfast.jpg');
+let bubblegum = new Product('bubblegum', './assets/bubblegum.jpg');
+let chair = new Product('chair', './assets/chair.jpg');
+let cthulhu = new Product('cthulhu', './assets/cthulhu.jpg');
+let dogDuck = new Product('dog-duck', './assets/dog-duck.jpg');
+let dragon = new Product('dragon', './assets/dragon.jpg');
+let pen = new Product('pen', './assets/pen.jpg');
+let petSweep = new Product('pet-sweep', './assets/pet-sweep.jpg');
+let scissors = new Product('scissors', './assets/scissors.jpg');
+let shark = new Product('shark', './assets/shark.jpg');
+let sweep = new Product('sweep', './assets/sweep.png');
+let tauntaun = new Product('tauntaun', './assets/tauntaun.jpg');
+let unicorn = new Product('unicorn', './assets/unicorn.jpg');
+let waterCan = new Product('water-can', './assets/water-can.jpg');
+let wineGlass = new Product('wine-glass', './assets/wine-glass.jpg');
 
+// Create an algorithm that will randomly generate three unique product images from the images directory and display them side-by-side-by-side in the browser window.
+function generateUnique(){
+    //gives me a whole number
+    // for(let i=0; i<3; i++){
+        //randomPic variable, array[randomNumberGenerated], like productNames[2]
+        let randomPicA = allProducts[Math.floor(Math.random() * productNames.length)];
+        let randomPicB = allProducts[Math.floor(Math.random() * productNames.length)];
+        let randomPicC = allProducts[Math.floor(Math.random() * productNames.length)];
+        //so we print 3 different objects
+        // console.log(randomPic);
+        return {randomPicA, randomPicB, randomPicC};
+    // }
+}
+let threeValues = generateUnique();
 
-    //add src attribute to the images
-    img_one.setAttribute('src', bag.filePath);
-    img_one.setAttribute('alt', bag.name);
-    img_two.setAttribute('src', banana.filePath);
-    img_two.setAttribute('alt', banana.name);
+//gonna pass in randomPicture as parameter, which'll be the randomly generated object from the generateUnique function
+function constructImages2(a, b, c){
+    //create new img tag for each pic i wanna display
+    let imgOne = document.createElement('img');
+    //once new img is created, set src and alt attribute to it
+    imgOne.setAttribute('src', a.filePath);
+    imgOne.setAttribute('alt', a.name);
+    //add img to div
+    imageContainer.append(imgOne);
 
-    img_one.addEventListener('click', function(){
-        trackClicks(bag);
+    //repeat for b and c
+    let imgTwo = document.createElement('img');
+    imgTwo.setAttribute('src', b.filePath);
+    imgTwo.setAttribute('alt', b.name);
+    imageContainer.append(imgTwo);
+
+    let imgThree = document.createElement('img');
+    imgThree.setAttribute('src', c.filePath);
+    imgThree.setAttribute('alt', c.name);
+    imageContainer.append(imgThree);
+
+    imgOne.addEventListener('click', function(){
+        trackClicks(imgOne);
     });
-    img_two.addEventListener('click', function(){
-        trackClicks(banana);
+    imgTwo.addEventListener('click', function(){
+        trackClicks(imgTwo);
+    });
+    imgThree.addEventListener('click', function(){
+        trackClicks(imgThree);
     });
 }
 
@@ -66,6 +105,8 @@ resultsButton.addEventListener('click', showResults);
 //make function to display random images
 function displayRandomImage(){
     //this function needs to call the randomizer algorithm
+    //when an image is clicked, the randomizer needs to be called to generate 3 different pictures
+
 }
 
 
@@ -91,18 +132,22 @@ function trackTimesShown(product){
     //check if the image is here
     //IF the image is shown on the document -->
     //THEN increase the value of timeShown by one
-    if(product.name === img_one.alt){
+    if(product.name === imgOne.alt){
         console.log(product.name + ' is on the page');
         product.timesShown++;
         totalClicks++
         console.log(product.timesShown);
     }
-    else if(product.name === img_two.alt){
+    else if(product.name === imgTwo.alt){
         console.log(product.name + ' is on the page');
         product.timesShown++;
         console.log(product.timesShown); 
     }
-    else{
+    else if(product.name === imgThree.alt){
+        console.log(product.name + 'is on the page');
+        product.timesShown++;
+        console.log(product.timesShown);
+    }else{
         console.log('there is no image here');
     }
     //ALT attribute lets the page know there's an image there if the path is broken
@@ -135,7 +180,8 @@ function showResults(){
     }
 }
 
-constructImages();
+constructImages2(threeValues.randomPicA, threeValues.randomPicB, threeValues.randomPicC);
+// constructImages();
 // trackTimesShown(bag);
 // // trackTimesShown(banana);
 // displayResults(allProducts);
