@@ -29,6 +29,13 @@ const imageContainer = document.getElementById('image-container');
 const resultsContainer = document.getElementById('results');
 let resultsButton = document.getElementById('results-button');
 
+//can i instantiate with a for loop?
+for(let i=0; i<productNames.length; i++){
+    
+}
+
+
+
 //we gotta instantiate our objects
 let bag = new Product('bag', './assets/bag.jpg');
 // //this would be how to get it out of the array, utilitzing bracket notation and concatenation
