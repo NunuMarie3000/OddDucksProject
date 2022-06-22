@@ -7,10 +7,7 @@ let allProducts = [];
 let maxClicks = 25;
 let totalClicks = 0;
 //this array is gonna hold all our product names
-let productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'petSweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'waterCan', 'wineGlass'];
-
-//i feel like i'm gonna have to figure out how to make generateUnique not as convoluted as it is...
-
+let productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 
 // Create a constructor function that creates an object associated with each product, and has the following properties:
 function Product(name, filePath){
@@ -24,49 +21,35 @@ function Product(name, filePath){
     allProducts.push(this);
 }
 
+//can i instantiate with a for loop?
+function createNewProduct(){
+    //for the length of the productNames array, loop through every value in it
+    for(let i=0; i<productNames.length; i++){
+        //if the array item we're on is sweep, cause its the only png image
+        if(productNames[i] === 'sweep'){
+            //make sure i make the image a png
+            new Product(`${productNames[i]}`, `./assets/${productNames[i]}.png`);
+        }else{
+            //every other image, add the name and concatenate it with file path info
+            new Product(`${productNames[i]}`, `./assets/${productNames[i]}.jpg`); 
+        }
+    }
+}
+createNewProduct();
+
 //get elements from html
 const imageContainer = document.getElementById('image-container');
 const resultsContainer = document.getElementById('results');
 let resultsButton = document.getElementById('results-button');
-
-//can i instantiate with a for loop?
-for(let i=0; i<productNames.length; i++){
-    
-}
-
-
-
-//we gotta instantiate our objects
-let bag = new Product('bag', './assets/bag.jpg');
-// //this would be how to get it out of the array, utilitzing bracket notation and concatenation
-// let bag0 = new Product(productNames[0], './assets' + productNames[0] + '.jpg');
-let banana = new Product('banana', './assets/banana.jpg');
-let bathroom = new Product('bathroom', './assets/bathroom.jpg');
-let boots = new Product('boots', './assets/boots.jpg');
-let breakfast = new Product('breakfast', './assets/breakfast.jpg');
-let bubblegum = new Product('bubblegum', './assets/bubblegum.jpg');
-let chair = new Product('chair', './assets/chair.jpg');
-let cthulhu = new Product('cthulhu', './assets/cthulhu.jpg');
-let dogDuck = new Product('dog-duck', './assets/dog-duck.jpg');
-let dragon = new Product('dragon', './assets/dragon.jpg');
-let pen = new Product('pen', './assets/pen.jpg');
-let petSweep = new Product('pet-sweep', './assets/pet-sweep.jpg');
-let scissors = new Product('scissors', './assets/scissors.jpg');
-let shark = new Product('shark', './assets/shark.jpg');
-let sweep = new Product('sweep', './assets/sweep.png');
-let tauntaun = new Product('tauntaun', './assets/tauntaun.jpg');
-let unicorn = new Product('unicorn', './assets/unicorn.jpg');
-let waterCan = new Product('water-can', './assets/water-can.jpg');
-let wineGlass = new Product('wine-glass', './assets/wine-glass.jpg');
 
 // Create an algorithm that will randomly generate three unique product images from the images directory and display them side-by-side-by-side in the browser window.
 function generateUnique(){
     //gives me a whole number
     // for(let i=0; i<3; i++){
         //randomPic variable, array[randomNumberGenerated], like productNames[2]
-        let randomPicA = allProducts[Math.floor(Math.random() * productNames.length)];
-        let randomPicB = allProducts[Math.floor(Math.random() * productNames.length)];
-        let randomPicC = allProducts[Math.floor(Math.random() * productNames.length)];
+        let randomPicA = allProducts[getRandomNumber()];
+        let randomPicB = allProducts[getRandomNumber()];
+        let randomPicC = allProducts[getRandomNumber()];
         //so we print 3 different objects
         // console.log(randomPic);
         return {randomPicA, randomPicB, randomPicC};
@@ -96,23 +79,53 @@ function constructImages2(a, b, c){
     imageContainer.append(imgThree);
 
     imgOne.addEventListener('click', function(){
-        trackClicks(imgOne);
+        trackClicks(a);
     });
     imgTwo.addEventListener('click', function(){
-        trackClicks(imgTwo);
+        trackClicks(c);
     });
     imgThree.addEventListener('click', function(){
-        trackClicks(imgThree);
+        trackClicks(c);
     });
+
+    // if imgOne.alt === productNames
+    for(let i=0; i<productNames.length; i++){
+        if(imgOne.alt === productNames[i]){
+            a.timesShown++;
+        }
+        if(imgTwo.alt === productNames[i]){
+            b.timesShown++;
+        }
+        if(imgThree.alt === productNames[i]){
+            c.timesShown++;
+        }
+    }
 }
+
+function tooManyClicks(){
+    totalClicks++;
+    console.log(totalClicks);
+    if(totalClicks === maxClicks){
+        alert('too many clicks!');
+    }
+}
+
+function getRandomNumber(){
+    return Math.floor(Math.random() * productNames.length);
+}
+
+
+
 
 //add event listeners 
 resultsButton.addEventListener('click', showResults);
+imageContainer.addEventListener('click', tooManyClicks);
 
 //make function to display random images
 function displayRandomImage(){
     //this function needs to call the randomizer algorithm
     //when an image is clicked, the randomizer needs to be called to generate 3 different pictures
+
 
 }
 
@@ -123,13 +136,9 @@ function displayRandomImage(){
 function trackClicks(product){
     //need to pass an object to this function
     //if the object is clicked --->
-    if(product.timesClicked < 25){
+    if(totalClicks < maxClicks){
     //THEN increase the value of timesClicked by one per click
     product.timesClicked++;
-    totalClicks ++
-    console.log(product.timesClicked);
-    }else{
-        alert('too many clicks!');
     }
 }
 
@@ -159,8 +168,6 @@ function trackTimesShown(product){
     }
     //ALT attribute lets the page know there's an image there if the path is broken
 }
-
-
 
 //make a function that displays the results on the results div
 //should be displayed in ul
