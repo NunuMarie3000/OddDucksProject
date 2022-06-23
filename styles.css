@@ -1,3 +1,15 @@
+h1{
+    font-family: 'Rubik Moonrocks', cursive;
+    font-size: 60px;
+    color: rgb(213, 15, 121);
+    background-color: rgb(129, 69, 152);
+}
+
+#title{
+    display: flex;
+    justify-content: center;
+}
+
 img{
     width: 20vw;
     height: 35vh;
@@ -9,4 +21,24 @@ img{
 #image-container{
     display: flex;
     justify-content: space-around;
+}
+
+#button-container{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10vh;
+}
+
+#results-button{
+    background-color: blueviolet;
+    color: hotpink;
+    height: 7vh;
+    width: 10vw;
+    font-size: large;
+    border-radius: 5%;
+}
+
+#results-button:hover{
+    background-color: violet;
+    color: purple;
 }
