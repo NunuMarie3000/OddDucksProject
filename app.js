@@ -45,19 +45,19 @@ let resultsButton = document.getElementById('results-button');
 // Create an algorithm that will randomly generate three unique product images from the images directory and display them side-by-side-by-side in the browser window.
 function generateUnique(){
     //gives me a whole number
-    // for(let i=0; i<3; i++){
         //randomPic variable, array[randomNumberGenerated], like productNames[2]
         let randomPicA = allProducts[getRandomNumber()];
         let randomPicB = allProducts[getRandomNumber()];
         let randomPicC = allProducts[getRandomNumber()];
         //so we print 3 different objects
         // console.log(randomPic);
-        return {randomPicA, randomPicB, randomPicC};
-    // }
+        return {randomPicA, randomPicB, randomPicC};      
 }
 let threeValues = generateUnique();
 
 //gonna pass in randomPicture as parameter, which'll be the randomly generated object from the generateUnique function
+
+//create these images in the global scope so i can change stuff about it
 function constructImages2(a, b, c){
     //create new img tag for each pic i wanna display
     let imgOne = document.createElement('img');
@@ -80,12 +80,15 @@ function constructImages2(a, b, c){
 
     imgOne.addEventListener('click', function(){
         trackClicks(a);
+        trackTimesShown(a);
     });
     imgTwo.addEventListener('click', function(){
-        trackClicks(c);
+        trackClicks(b);
+        trackTimesShown(b);
     });
     imgThree.addEventListener('click', function(){
         trackClicks(c);
+        trackTimesShown(c);
     });
 
     // if imgOne.alt === productNames
@@ -99,6 +102,27 @@ function constructImages2(a, b, c){
         if(imgThree.alt === productNames[i]){
             c.timesShown++;
         }
+    }
+    //use a loop to check all the product names in the array so i don't have to keep writing this stuff out
+    function trackTimesShown(product){
+        //we need to pass an object to this function
+        //check if the image is here
+        //IF the image is shown on the document -->
+        //THEN increase the value of timeShown by one
+        if(product.name === imgOne.alt){
+            // console.log(product.name + ' is on the page');
+            product.timesShown++;
+        }else if(product.name === imgTwo.alt){
+            // console.log(product.name + ' is on the page');
+            product.timesShown++;
+        }else if(product.name === imgThree.alt){
+            // console.log(product.name + ' is on the page');
+            product.timesShown++;
+        }
+        // else{
+        //     console.log('there is no image here');
+        // }
+        //ALT attribute lets the page know there's an image there if the path is broken
     }
 }
 
@@ -114,21 +138,15 @@ function getRandomNumber(){
     return Math.floor(Math.random() * productNames.length);
 }
 
-
-
-
 //add event listeners 
 resultsButton.addEventListener('click', showResults);
 imageContainer.addEventListener('click', tooManyClicks);
 
-//make function to display random images
-function displayRandomImage(){
-    //this function needs to call the randomizer algorithm
-    //when an image is clicked, the randomizer needs to be called to generate 3 different pictures
-
-
-}
-
+// //make function to display random images
+// function displayRandomImage(){
+//     //this function needs to call the randomizer algorithm
+//     //when an image is clicked, the randomizer needs to be called to generate 3 different pictures
+// }
 
 //make a function to keep track of the times a certain object was clicked 
 //this needs to apply to every object
@@ -142,48 +160,21 @@ function trackClicks(product){
     }
 }
 
-//use a loop to check all the product names in the array so i don't have to keep writing this stuff out
-function trackTimesShown(product){
-    //we need to pass an object to this function
-    //check if the image is here
-    //IF the image is shown on the document -->
-    //THEN increase the value of timeShown by one
-    if(product.name === imgOne.alt){
-        console.log(product.name + ' is on the page');
-        product.timesShown++;
-        totalClicks++
-        console.log(product.timesShown);
-    }
-    else if(product.name === imgTwo.alt){
-        console.log(product.name + ' is on the page');
-        product.timesShown++;
-        console.log(product.timesShown); 
-    }
-    else if(product.name === imgThree.alt){
-        console.log(product.name + 'is on the page');
-        product.timesShown++;
-        console.log(product.timesShown);
-    }else{
-        console.log('there is no image here');
-    }
-    //ALT attribute lets the page know there's an image there if the path is broken
-}
-
 //make a function that displays the results on the results div
 //should be displayed in ul
 function displayResults(productsArray){
 //grab results div
-
-    for(let i=0; i < productsArray.length; i++){
+    //for the length of the productsArray
+    for(let i=0; i <productsArray.length; i++){
+        //assign a variable to represent every individual item in the array
         let product = productsArray[i];
-        // console.log(product);
-        let resultMessage = 
-    `This product was clicked ${product.timesClicked} times.
-This product was shown ${product.timesShown} times.
-This product is called ${product.name}.
-You can find this product at : ${product.filePath}`;
+        //the results I want to put on the screen
+        let resultMessage = `This product was clicked ${product.timesClicked} times. This product was shown ${product.timesShown} times.This product is called ${product.name}. You can find this product at : ${product.filePath}`;
+        //create p element to print the results in on the page
         let resultsP = document.createElement('p');
+        //add p element to results container div on html file
         resultsContainer.append(resultsP);
+        //print the message inside the p every time there's a new item in that array
         resultsP.textContent = resultMessage;
     }
 }
@@ -195,7 +186,3 @@ function showResults(){
 }
 
 constructImages2(threeValues.randomPicA, threeValues.randomPicB, threeValues.randomPicC);
-// constructImages();
-// trackTimesShown(bag);
-// // trackTimesShown(banana);
-// displayResults(allProducts);
