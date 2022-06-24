@@ -1,8 +1,12 @@
-h1{
-    font-family: 'Rubik Moonrocks', cursive;
-    font-size: 60px;
-    color: rgb(213, 15, 121);
-    background-color: rgb(129, 69, 152);
+header{
+    font-family: 'Pacifico', cursive;
+    font-size: 40px;
+    color: #F5BE43;
+    background-color: #380841;
+    text-align: center;
+    border-color: #F8029E;
+    border-style: solid;
+    border-width: 2px;
 }
 
 #title{
@@ -14,7 +18,7 @@ img{
     width: 20vw;
     height: 45vh;
     border-style: solid;
-    border-color: blueviolet;
+    border-color: #F8029E;
     border-width: 5px;
     border-radius: 5%;
 }
@@ -22,6 +26,7 @@ img{
 #image-container{
     display: flex;
     justify-content: space-evenly;
+    margin-top: 10vh;
 }
 
 #button-container{
@@ -31,8 +36,8 @@ img{
 }
 
 #results-button{
-    background-color: blueviolet;
-    color: hotpink;
+    background-color: #380841;
+    color: #F5BE43;
     height: 7vh;
     width: 10vw;
     font-size: 2vw;
@@ -40,6 +45,31 @@ img{
 }
 
 #results-button:hover{
-    background-color: violet;
-    color: purple;
+    background-color: white;
+    color: rgb(234, 30, 68);
+}
+
+#results{
+    background-color: #F5BE43;
+    color:#240629;
+    font-weight: bold;
+    padding: 10px 0 10px 0;
+    text-align: center;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #F8029E;
+    border-radius: 5%;
+    font-size: 20px;
+}
+
+footer{
+    font-family: 'Pacifico', cursive;
+    font-size: 40px;
+    color: #F5BE43;
+    background-color: #380841;
+    text-align: left;
+    margin-top: 1vh;
+    border-color: #F8029E;
+    border-style: solid;
+    border-width: 2px;
 }

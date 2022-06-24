@@ -92,7 +92,7 @@ function tooManyClicks(){
     //add point to totalClicks counter whenever the image is clicked
     totalClicks++;
     if(totalClicks === maxClicks){
-        alert('too many clicks!');
+        alert('Thank you for voting! Click the Results Button to view results!');
     }
 }
 //if the user clicks 25 times, then we can access the results
@@ -180,7 +180,8 @@ function displayResults(productsArray){
         //assign a variable to represent every individual item in the array
         let product = productsArray[i];
         //the results I want to put on the screen
-        let resultMessage = `This product was clicked ${product.timesClicked} times. This product was shown ${product.timesShown} times.This product is called ${product.name}. You can find this product at : ${product.filePath}`;
+        //.charAt(0).toUpperCase() + name.slice(1) -> making the first letter uppercase
+        let resultMessage = `${product.name.charAt(0).toUpperCase() + product.name.slice(1)} was shown ${product.timesShown} times and clicked ${product.timesClicked} times! You can find ${product.name.charAt(0).toUpperCase() + product.name.slice(1)} at: ${product.filePath}.`;
         //create p element to print the results in on the page
         let resultsP = document.createElement('p');
         //add p element to results container div on html file
