@@ -1,5 +1,4 @@
 'use strict';
-//an algorithm is a step by step list of instructions to be executed 
 
 //this array is gonna hold all our product objects
 let allProducts = [];
@@ -40,28 +39,16 @@ createNewProduct();
 
 //get elements from html
 const imageContainer = document.getElementById('image-container');
-
 const resultsContainer = document.getElementById('results');
 let resultsButton = document.getElementById('results-button');
+
 //grab 3 images from html
 let imgOne = document.getElementById('img-one');
 let imgTwo = document.getElementById('img-two');
 let imgThree = document.getElementById('img-three');
+
 //make array to put three img into
 let imgArray=[imgOne, imgTwo, imgThree];
-
-//make a function to keep track of the times a certain object was clicked 
-//this needs to apply to every object
-//25 total clicks, not 25 clicks on each pic
-// function trackClicks(product){
-//     //need to pass an object to this function
-//     //if the object is clicked --->
-//     if(totalClicks < maxClicks){
-//     //THEN increase the value of timesClicked by one per click
-//     product.timesClicked++;
-//     }
-// }
-
 
 // Create an algorithm that will randomly generate three unique product images from the images directory and display them side-by-side-by-side in the browser window.
 function generateRandomImage(image){
@@ -80,15 +67,18 @@ function displayImage(){
         generateRandomImage(imgArray[i]);
     }
 }
+displayImage();
 
-//maybe a event listener function that checks if imgOne/imgTwo/imgThree src/alt match src/alt in allProducts array, with loop
+//event listener function that checks if imgOne/imgTwo/imgThree src/alt match src/alt in allProducts array, with loop
 function checkTimesClicked(img){
-    //add event listeners to them
+    //add event listeners to img being passed in
     img.addEventListener('click', function(){
         //loop through allProducts and check src/alt
-        for(let j=0; j<allProducts.length; j++){
-            if(img.alt === allProducts[j].name){
-                allProducts[j].timesClicked++;
+        for(let i=0; i<allProducts.length; i++){
+            //if the alt being passed in matches an alt in the allProducts array of objects
+            if(img.alt === allProducts[i].name){
+                //add a point to the timesClicked property of that object
+                allProducts[i].timesClicked++;
             }
         }
     })
@@ -96,13 +86,6 @@ function checkTimesClicked(img){
 checkTimesClicked(imgOne);
 checkTimesClicked(imgTwo);
 checkTimesClicked(imgThree);
-
-//add event listener to the image being passed in so when it's clicked, it runs trackClicks function
-//pass in the selectedImage, which is the actual product object
-// imgOne.addEventListener('click', function(){
-//     selectedImage.timesClicked++;
-//     console.log(selectedImage.timesClicked);
-// });
 
 //function to track total clicks on the browser, stop when the user gets 25 clicks
 function tooManyClicks(){
@@ -122,6 +105,75 @@ function showResults(){
 //make a function that displays the results on the results div
 //should be displayed in ul
 function displayResults(productsArray){
+    //i need to put all the product objects' times clicked in an array so i can use the data for a chart
+    //create empty array
+    let timesClickedArray=[];
+    for(let i=0; i<allProducts.length; i++){
+        timesClickedArray.push(allProducts[i].timesClicked);
+    }
+    //i wanna display chart with rest of results
+    //adding my chart
+    const ctx = document.getElementById('chart').getContext('2d');
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: productNames,
+            datasets: [{
+                label: 'Times Clicked',
+                data: timesClickedArray,
+                backgroundColor: [
+                    '#CC0000',
+                    '#FF9999',
+                    '#FF8000',
+                    'FFB266',
+                    '#CCCC00',
+                    '#FFFFCC',
+                    '#193300',
+                    '#66CC00',
+                    '#FFE5CC',
+                    '#E5FFCC',
+                    '#CCFFCC',
+                    '#CCFFFF',
+                    '#CCCCFF',
+                    '#E5CCFF',
+                    '#FFCCE5',
+                    '#9999FF',
+                    '#99FF33',
+                    '#66B2FF',
+                    '#660000'
+                ],
+                borderColor: [
+                    '#CC0000',
+                    '#FF9999',
+                    '#FF8000',
+                    'FFB266',
+                    '#CCCC00',
+                    '#FFFFCC',
+                    '#193300',
+                    '#66CC00',
+                    '#FFE5CC',
+                    '#E5FFCC',
+                    '#CCFFCC',
+                    '#CCFFFF',
+                    '#CCCCFF',
+                    '#E5CCFF',
+                    '#FFCCE5',
+                    '#9999FF',
+                    '#99FF33',
+                    '#66B2FF',
+                    '#660000'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
     //grab results div
     //for the length of the productsArray
     for(let i=0; i <productsArray.length; i++){
@@ -137,7 +189,7 @@ function displayResults(productsArray){
         resultsP.textContent = resultMessage;
     }
 }
-displayImage();
+
 //add event listeners 
 //event listener on image container, when any image is clicked, generates new pics for all items in imgArray
 imageContainer.addEventListener('click', function(){
@@ -146,82 +198,6 @@ imageContainer.addEventListener('click', function(){
     };
     tooManyClicks();
 });
-resultsButton.addEventListener('click', showResults);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// //function so i can display chart with rest of results
-// function displayChart(){
-//     //adding my chart
-//     const ctx = document.getElementById('chart').getContext('2d');
-//     new Chart(ctx, {
-//         type: 'bar',
-//         data: {
-//             labels: allProducts.name,
-//             datasets: [{
-//                 label: 'Times Clicked',
-//                 data: allProducts.timesClicked,
-//                 backgroundColor: [
-//                     'rgba(255, 99, 132, 0.2)',
-//                     // 'rgba(54, 162, 235, 0.2)',
-//                     // 'rgba(255, 206, 86, 0.2)',
-//                     // 'rgba(75, 192, 192, 0.2)',
-//                     // 'rgba(153, 102, 255, 0.2)',
-//                     // 'rgba(255, 159, 64, 0.2)'
-//                 ],
-//                 borderColor: [
-//                     'rgba(255, 99, 132, 1)',
-//                     // 'rgba(54, 162, 235, 1)',
-//                     // 'rgba(255, 206, 86, 1)',
-//                     // 'rgba(75, 192, 192, 1)',
-//                     // 'rgba(153, 102, 255, 1)',
-//                     // 'rgba(255, 159, 64, 1)'
-//                 ],
-//                 borderWidth: 1
-//             }]
-//         },
-//         options: {
-//             scales: {
-//                 y: {
-//                     beginAtZero: true
-//                 }
-//             }
-//         }
-//     });
-// }
+resultsButton.addEventListener('click', function(){
+    showResults();
+});
