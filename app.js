@@ -61,12 +61,7 @@ let imgArray=[imgOne, imgTwo, imgThree];
 //     product.timesClicked++;
 //     }
 // }
-    // //add event listener to the image being passed in so when it's clicked, it runs trackClicks function
-    // //pass in the selectedImage, which is the actual product object
-    // image.addEventListener('click', function(){
-    //     selectedImage.timesClicked++;
-    //     console.log(selectedImage.timesClicked);
-    // });
+
 
 // Create an algorithm that will randomly generate three unique product images from the images directory and display them side-by-side-by-side in the browser window.
 function generateRandomImage(image){
@@ -85,6 +80,29 @@ function displayImage(){
         generateRandomImage(imgArray[i]);
     }
 }
+
+//maybe a event listener function that checks if imgOne/imgTwo/imgThree src/alt match src/alt in allProducts array, with loop
+function checkTimesClicked(img){
+    //add event listeners to them
+    img.addEventListener('click', function(){
+        //loop through allProducts and check src/alt
+        for(let j=0; j<allProducts.length; j++){
+            if(img.alt === allProducts[j].name){
+                allProducts[j].timesClicked++;
+            }
+        }
+    })
+}
+checkTimesClicked(imgOne);
+checkTimesClicked(imgTwo);
+checkTimesClicked(imgThree);
+
+//add event listener to the image being passed in so when it's clicked, it runs trackClicks function
+//pass in the selectedImage, which is the actual product object
+// imgOne.addEventListener('click', function(){
+//     selectedImage.timesClicked++;
+//     console.log(selectedImage.timesClicked);
+// });
 
 //function to track total clicks on the browser, stop when the user gets 25 clicks
 function tooManyClicks(){
