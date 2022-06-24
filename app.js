@@ -188,6 +188,14 @@ function displayResults(productsArray){
         //print the message inside the p every time there's a new item in that array
         resultsP.textContent = resultMessage;
     }
+    //i want to store my results in local storage so i can access it if i refresh my page
+    //probably just want all the data that's in my chart
+    //loop through allProducts array
+    for(let i=0; i<allProducts.length; i++){
+        //sets the local storage key to Product: and name of product from allProducts array's object
+        //lets local storage value to Times Clicked: times clicked from allProducts array object
+        localStorage.setItem(`Product: ${allProducts[i].name}`, `Times Clicked: ${allProducts[i].timesClicked}`);
+    }
 }
 
 //add event listeners 
