@@ -53,14 +53,20 @@ let imgArray=[imgOne, imgTwo, imgThree];
 //make a function to keep track of the times a certain object was clicked 
 //this needs to apply to every object
 //25 total clicks, not 25 clicks on each pic
-function trackClicks(product){
-    //need to pass an object to this function
-    //if the object is clicked --->
-    if(totalClicks < maxClicks){
-    //THEN increase the value of timesClicked by one per click
-    product.timesClicked++;
-    }
-}
+// function trackClicks(product){
+//     //need to pass an object to this function
+//     //if the object is clicked --->
+//     if(totalClicks < maxClicks){
+//     //THEN increase the value of timesClicked by one per click
+//     product.timesClicked++;
+//     }
+// }
+    // //add event listener to the image being passed in so when it's clicked, it runs trackClicks function
+    // //pass in the selectedImage, which is the actual product object
+    // image.addEventListener('click', function(){
+    //     selectedImage.timesClicked++;
+    //     console.log(selectedImage.timesClicked);
+    // });
 
 // Create an algorithm that will randomly generate three unique product images from the images directory and display them side-by-side-by-side in the browser window.
 function generateRandomImage(image){
@@ -68,14 +74,10 @@ function generateRandomImage(image){
     //creates random number that's also length of productNames array
     let randoMath = Math.floor(Math.random() * allProducts.length);
     let selectedImage = allProducts[randoMath];//will return an object
-    // for(let i=0; i<3; i++)
     //set alt/src/add timesShown by 1
     image.src = selectedImage.filePath;
     image.alt = selectedImage.name;
     selectedImage.timesShown++;
-    //add event listener to the image being passed in so when it's clicked, it runs trackClicks function
-    //pass in the selectedImage, which is the actual product object
-    image.addEventListener('click', trackClicks(selectedImage));
 }
 //lil loop to put a random image in all 3 img when the page loads
 function displayImage(){
@@ -92,6 +94,7 @@ function tooManyClicks(){
         alert('too many clicks!');
     }
 }
+//if the user clicks 25 times, then we can access the results
 function showResults(){
     if(totalClicks === maxClicks){
         displayResults(allProducts);
@@ -125,5 +128,82 @@ imageContainer.addEventListener('click', function(){
     };
     tooManyClicks();
 });
-imgOne.addEventListener('click', trackClicks);
 resultsButton.addEventListener('click', showResults);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// //function so i can display chart with rest of results
+// function displayChart(){
+//     //adding my chart
+//     const ctx = document.getElementById('chart').getContext('2d');
+//     new Chart(ctx, {
+//         type: 'bar',
+//         data: {
+//             labels: allProducts.name,
+//             datasets: [{
+//                 label: 'Times Clicked',
+//                 data: allProducts.timesClicked,
+//                 backgroundColor: [
+//                     'rgba(255, 99, 132, 0.2)',
+//                     // 'rgba(54, 162, 235, 0.2)',
+//                     // 'rgba(255, 206, 86, 0.2)',
+//                     // 'rgba(75, 192, 192, 0.2)',
+//                     // 'rgba(153, 102, 255, 0.2)',
+//                     // 'rgba(255, 159, 64, 0.2)'
+//                 ],
+//                 borderColor: [
+//                     'rgba(255, 99, 132, 1)',
+//                     // 'rgba(54, 162, 235, 1)',
+//                     // 'rgba(255, 206, 86, 1)',
+//                     // 'rgba(75, 192, 192, 1)',
+//                     // 'rgba(153, 102, 255, 1)',
+//                     // 'rgba(255, 159, 64, 1)'
+//                 ],
+//                 borderWidth: 1
+//             }]
+//         },
+//         options: {
+//             scales: {
+//                 y: {
+//                     beginAtZero: true
+//                 }
+//             }
+//         }
+//     });
+// }
